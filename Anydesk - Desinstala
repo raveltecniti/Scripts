@@ -1,0 +1,18 @@
+# Define o caminho de instalação padrão para AnyDesk
+$anyDeskPath = "C:\Program Files (x86)\AnyDesk\AnyDesk.exe"
+
+# Verifica se o executável AnyDesk existe
+if (Test-Path $anyDeskPath) {
+    Write-Host "AnyDesk encontrado. Tentando remover silenciosamente..."
+
+    try {
+        # Executa o comando de remoção silenciosa
+        Start-Process -FilePath $anyDeskPath -ArgumentList "--silent", "--remove" -Wait -NoNewWindow
+        Write-Host "AnyDesk foi desinstalado silenciosamente."
+    } catch {
+        Write-Error "Ocorreu um erro ao remover silenciosamente: $_"
+    }
+
+} else {
+    Write-Host "AnyDesk não está instalado ou não foi encontrado em $anyDeskPath."
+}
