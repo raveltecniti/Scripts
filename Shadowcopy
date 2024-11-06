@@ -1,0 +1,19 @@
+# Definir o volume
+$volume = "C:\"
+
+# Executar o comando de criação de Shadow Copy
+$shadowCopyResult = wmic shadowcopy call create Volume=$volume
+
+# Verificar se a operação foi bem-sucedida
+if ($shadowCopyResult.ReturnValue -eq 0) {
+    $resultMessage = "Falha ao criar Shadow Copy na unidade $volume. Código de erro: $($shadowCopyResult.ReturnValue)"
+} else {
+    $resultMessage = "Shadow Copy criada com sucesso na unidade $volume."
+}
+
+# Exibir o resultado para fins de log
+Write-Output $resultMessage
+
+# Gravar o resultado no campo personalizado do Datto
+#Adicionar essas Variaveis no Datto= Nome: UDFNumber | Tipo: Cadeia | Valor Padrão: 7
+New-ItemProperty -Path "HKLM:\SOFTWARE\CentraStage" -Name "Custom$env:UDFNumber" -Value $resultMessage -PropertyType String -Force
