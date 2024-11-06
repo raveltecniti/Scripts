@@ -1,0 +1,13 @@
+# Fecha o AnyDesk
+Stop-Process -Name "AnyDesk" -Force
+
+# Exclui as pastas de configuração do AnyDesk
+Remove-Item -Path "C:\ProgramData\AnyDesk" -Recurse -Force
+Remove-Item -Path "$env:APPDATA\AnyDesk" -Recurse -Force
+Remove-Item -Path "$env:LOCALAPPDATA\AnyDesk" -Recurse -Force
+
+# Inicia o AnyDesk
+Start-Process -FilePath "C:\Program Files (x86)\AnyDesk\AnyDesk.exe"
+
+Write-Host "Configurações do AnyDesk resetadas com sucesso."
+Pause
